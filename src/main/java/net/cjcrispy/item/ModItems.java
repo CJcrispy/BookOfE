@@ -16,6 +16,26 @@ public class ModItems {
             new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
                     .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 3, -2.4f))));
 
+    public static final Item SLIME_SWORD = registerItem("slime_sword",
+            new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
+
+    public static final Item ANGEL_SWORD = registerItem("angel_sword",
+            new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
+
+    public static final Item BEACH_BLADE = registerItem("beach_blade",
+            new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
+
+    public static final Item BLACKBORN = registerItem("the_black_blade",
+            new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
+
+    public static final Item CALAMITY = registerItem("calamityblade",
+            new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
+                    .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
+
     // helper function
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(BookOfE.MOD_ID, name), item);
@@ -26,6 +46,11 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
             entries.add(WORM_HAMMER);
+            entries.add(SLIME_SWORD);
+            entries.add(ANGEL_SWORD);
+            entries.add(BEACH_BLADE);
+            entries.add(BLACKBORN);
+            entries.add(CALAMITY);
         });
     }
 }
