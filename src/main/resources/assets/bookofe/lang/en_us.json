@@ -4,5 +4,7 @@
   "item.bookofe.beach_blade": "Beach Blade",
   "item.bookofe.the_black_blade": "Blackborn",
   "item.bookofe.calamityblade": "Calamity",
-  "item.bookofe.slime_sword": "Slime Sword"
+  "item.bookofe.slime_sword": "Slime Sword",
+
+  "itemgroup.bookofe.book_of_e_items": "Book of E Items"
 }

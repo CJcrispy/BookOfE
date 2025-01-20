@@ -1,5 +1,6 @@
 package net.cjcrispy;
 
+import net.cjcrispy.item.ModItemGroups;
 import net.cjcrispy.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,6 +13,8 @@ public class BookOfE implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModItemGroups.registerItemGroups();
+
 		ModItems.registerModItems();
 	}
 }
