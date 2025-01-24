@@ -1,9 +1,12 @@
 package net.cjcrispy;
 
+import net.cjcrispy.entity.ModEntities;
+import net.cjcrispy.entity.custom.MillyKnightEntity;
 import net.cjcrispy.item.ModItemGroups;
 import net.cjcrispy.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,5 +19,8 @@ public class BookOfE implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 
 		ModItems.registerModItems();
+		ModEntities.registerModEntities();
+
+		FabricDefaultAttributeRegistry.register(ModEntities.MILLY_KNIGHT, MillyKnightEntity.createAttributes());
 	}
 }

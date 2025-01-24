@@ -6,5 +6,9 @@
   "item.bookofe.calamityblade": "Calamity",
   "item.bookofe.slime_sword": "Slime Sword",
 
+  "item.bookofe.milly_knight_spawn_egg": "Milly Knight Egg",
+
+  "entity.bookofe.milly_knight": "milly_knight",
+
   "itemgroup.bookofe.book_of_e_items": "Book of E Items"
 }
