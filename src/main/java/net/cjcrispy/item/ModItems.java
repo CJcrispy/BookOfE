@@ -37,6 +37,9 @@ public class ModItems {
     public static final Item MILLY_KNIGHT_SPAWN_EGG = registerItem("milly_knight_spawn_egg",
             new SpawnEggItem(ModEntities.MILLY_KNIGHT, 0x9dc783, 0xbfaf5f, new Item.Settings()));
 
+    public static final Item DARK_WIZARD_SPAWN_EGG = registerItem("dark_wizard_spawn_egg",
+            new SpawnEggItem(ModEntities.DARK_WIZARD, 0x6e33ff, 0x1e1a27, new Item.Settings()));
+
 
     // helper function
     private static Item registerItem(String name, Item item) {
@@ -53,7 +56,12 @@ public class ModItems {
             entries.add(BEACH_BLADE);
             entries.add(BLACKBORN);
             entries.add(CALAMITY);
+
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries ->{
             entries.add(MILLY_KNIGHT_SPAWN_EGG);
+            entries.add(DARK_WIZARD_SPAWN_EGG);
         });
     }
 }

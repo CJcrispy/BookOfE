@@ -1,6 +1,7 @@
 package net.cjcrispy;
 
 import net.cjcrispy.entity.ModEntities;
+import net.cjcrispy.entity.custom.DarkWizardEntity;
 import net.cjcrispy.entity.custom.MillyKnightEntity;
 import net.cjcrispy.item.ModItemGroups;
 import net.cjcrispy.item.ModItems;
@@ -22,5 +23,6 @@ public class BookOfE implements ModInitializer {
 		ModEntities.registerModEntities();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.MILLY_KNIGHT, MillyKnightEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.DARK_WIZARD, DarkWizardEntity.createAttributes());
 	}
 }

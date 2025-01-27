@@ -7,8 +7,10 @@
   "item.bookofe.slime_sword": "Slime Sword",
 
   "item.bookofe.milly_knight_spawn_egg": "Milly Knight Egg",
+  "item.bookofe.dark_wizard_spawn_egg": "Dark Wizard Egg",
 
-  "entity.bookofe.milly_knight": "milly_knight",
+  "entity.bookofe.milly_knight": "Milly, Knight Commander",
+  "entity.bookofe.dark_wizard": "Dark Wizard",
 
   "itemgroup.bookofe.book_of_e_items": "Book of E Items"
 }

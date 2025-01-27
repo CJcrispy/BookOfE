@@ -24,6 +24,7 @@ public class ModItemGroups {
                         entries.add(ModItems.ANGEL_SWORD);
                         entries.add(ModItems.SLIME_SWORD);
                         entries.add(ModItems.MILLY_KNIGHT_SPAWN_EGG);
+                        entries.add(ModItems.DARK_WIZARD_SPAWN_EGG);
 
                     }).build());
 

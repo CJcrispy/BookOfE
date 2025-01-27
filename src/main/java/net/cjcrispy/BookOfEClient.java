@@ -1,6 +1,7 @@
 package net.cjcrispy;
 
 import net.cjcrispy.entity.ModEntities;
+import net.cjcrispy.entity.client.dark_wizard.DarkWizardRenderer;
 import net.cjcrispy.entity.custom.MillyKnightEntity;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -21,5 +22,6 @@ public class BookOfEClient implements ClientModInitializer {
                     }
                 });
 
+        EntityRendererRegistry.register(ModEntities.DARK_WIZARD, DarkWizardRenderer::new);
     }
 }
