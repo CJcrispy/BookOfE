@@ -23,6 +23,7 @@ public class BookOfE implements ModInitializer {
 		ModEntities.registerModEntities();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.MILLY_KNIGHT, MillyKnightEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.QUINN_KNIGHT, MillyKnightEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DARK_WIZARD, DarkWizardEntity.createAttributes());
 	}
 }

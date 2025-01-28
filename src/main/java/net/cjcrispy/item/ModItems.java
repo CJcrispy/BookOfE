@@ -34,8 +34,13 @@ public class ModItems {
             new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
                     .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
 
+    // Spawn Eggs
+
     public static final Item MILLY_KNIGHT_SPAWN_EGG = registerItem("milly_knight_spawn_egg",
             new SpawnEggItem(ModEntities.MILLY_KNIGHT, 0x9dc783, 0xbfaf5f, new Item.Settings()));
+
+    public static final Item QUINN_KNIGHT_SPAWN_EGG = registerItem("quinn_knight_spawn_egg",
+            new SpawnEggItem(ModEntities.QUINN_KNIGHT, 0x000000, 0xbfaf5f, new Item.Settings()));
 
     public static final Item DARK_WIZARD_SPAWN_EGG = registerItem("dark_wizard_spawn_egg",
             new SpawnEggItem(ModEntities.DARK_WIZARD, 0x6e33ff, 0x1e1a27, new Item.Settings()));

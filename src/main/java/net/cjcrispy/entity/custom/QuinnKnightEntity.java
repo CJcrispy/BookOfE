@@ -1,19 +1,17 @@
 package net.cjcrispy.entity.custom;
 
 import net.cjcrispy.item.ModItems;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -26,21 +24,19 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 
-public class MillyKnightEntity extends HostileEntity {
+public class QuinnKnightEntity extends HostileEntity {
 
     // Store equipped armor and hand items
     private final DefaultedList<ItemStack> equippedItems = DefaultedList.ofSize(6, ItemStack.EMPTY);
 
-    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Milly, Knight Commander"),
-            BossBar.Color.WHITE, BossBar.Style.NOTCHED_10);
+    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Quinn, Fallen Knight"),
+            BossBar.Color.RED, BossBar.Style.NOTCHED_10);
 
-    public MillyKnightEntity(EntityType<? extends HostileEntity> entityType, World world) {
-
+    public QuinnKnightEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.initEquipment(world.getRandom(), world.getLocalDifficulty(this.getBlockPos()));
-        System.out.println("Milly Knight initialized");
+        System.out.println("Quinn Knight initialized");
     }
-
 
     @Override
     protected void initGoals() {
@@ -48,14 +44,14 @@ public class MillyKnightEntity extends HostileEntity {
         this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // Attack logic
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true)); // Target villagers proactively
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true)); // Target villagers proactively
         this.targetSelector.add(4, new RevengeGoal(this)); // Revenge against the last attacker
 
         // General AI behavior goals
         this.goalSelector.add(2, new WanderAroundFarGoal(this, 1.0)); // Wander randomly
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); // Look at players
         this.goalSelector.add(4, new LookAtEntityGoal(this, IronGolemEntity.class, 8.0F)); // Look at golems
-        this.goalSelector.add(5, new LookAtEntityGoal(this, QuinnKnightEntity.class, 8.0F)); // Look at villagers
+        this.goalSelector.add(5, new LookAtEntityGoal(this, MillyKnightEntity.class, 8.0F)); // Look at villagers
         this.goalSelector.add(6, new LookAroundGoal(this)); // Look around when idle
         this.goalSelector.add(7, new SwimGoal(this)); // Swim when underwater
     }
@@ -70,7 +66,6 @@ public class MillyKnightEntity extends HostileEntity {
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 6)
                 .add(EntityAttributes.GENERIC_SCALE, 1.35);
     }
-
 
     /**
      * Entity tick logic (runs every tick).
@@ -98,14 +93,17 @@ public class MillyKnightEntity extends HostileEntity {
 
         // Equip weapon
         ItemStack weapon = random.nextFloat() < 0.5
-                ? new ItemStack(ModItems.CALAMITY)
+                ? new ItemStack(ModItems.BLACKBORN)
                 : new ItemStack(Items.DIAMOND_SWORD);
         this.equipStack(EquipmentSlot.MAINHAND, weapon);
 
-        // Verify equipment
-        System.out.println("Head: " + getEquippedStack(EquipmentSlot.HEAD));
-        System.out.println("Chest: " + getEquippedStack(EquipmentSlot.CHEST));
-        System.out.println("Mainhand: " + getEquippedStack(EquipmentSlot.MAINHAND));
+
+        this.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET));
+        this.equipStack(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
+
+        this.equipStack(EquipmentSlot.MAINHAND, weapon);
+
+
     }
 
     /**
@@ -121,7 +119,12 @@ public class MillyKnightEntity extends HostileEntity {
      */
     @Override
     public ItemStack getEquippedStack(EquipmentSlot slot) {
-        return equippedItems.get(slot.getEntitySlotId());
+        if (slot == EquipmentSlot.MAINHAND) {
+            // Access the main hand stack directly
+            return this.equippedItems.get(EquipmentSlot.MAINHAND.getEntitySlotId());
+        } else {
+            return super.getEquippedStack(slot); // Handle other slots
+        }
     }
 
     /**
@@ -129,7 +132,12 @@ public class MillyKnightEntity extends HostileEntity {
      */
     @Override
     public void equipStack(EquipmentSlot slot, ItemStack stack) {
-        equippedItems.set(slot.getEntitySlotId(), stack);
+        if (slot == EquipmentSlot.MAINHAND) {
+            // Set the main hand stack directly
+            this.equippedItems.set(EquipmentSlot.MAINHAND.getEntitySlotId(), stack);
+        } else {
+            super.equipStack(slot, stack); // Handle other slots
+        }
     }
 
     /**
@@ -144,7 +152,7 @@ public class MillyKnightEntity extends HostileEntity {
     protected void dropLoot(DamageSource source, boolean causedByPlayer) {
         super.dropLoot(source, causedByPlayer);
 
-        this.dropItem(ModItems.BLACKBORN);
+        this.dropItem(ModItems.CALAMITY);
     }
 
     @Override
