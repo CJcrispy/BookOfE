@@ -1,5 +1,6 @@
 package net.cjcrispy.entity.custom;
 
+import net.cjcrispy.entity.ai.QuinnKnightGoal;
 import net.cjcrispy.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -12,13 +13,14 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.VillagerEntity;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Arm;
+
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
@@ -41,7 +43,7 @@ public class QuinnKnightEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         // Attack-related goals
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // Attack logic
+        this.goalSelector.add(1, new QuinnKnightGoal(this, 1.2, false)); // Attack logic
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true)); // Target villagers proactively
@@ -58,14 +60,30 @@ public class QuinnKnightEntity extends HostileEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 250)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 300)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64)
-                .add(EntityAttributes.GENERIC_ARMOR, 8)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 6)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 20)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 400)
+                .add(EntityAttributes.GENERIC_ARMOR, 10)
                 .add(EntityAttributes.GENERIC_SCALE, 1.35);
     }
+
+
+    @Override
+    protected void initEquipment(Random random, LocalDifficulty localDifficulty) {
+        super.initEquipment(random, localDifficulty); // Call to the parent class (HostileEntity) to preserve other behaviors
+
+        // Equip QuinnKnight with an iron sword in the main hand
+        this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+        System.out.println("QuinnKnight initialized with an Iron Sword!");
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+
 
     /**
      * Entity tick logic (runs every tick).
@@ -76,77 +94,13 @@ public class QuinnKnightEntity extends HostileEntity {
         // Add custom behavior here, such as effects or AI adjustments
         if (this.getWorld().isClient()) {
             // Client-side effects, like particles or animations
+
         } else {
             // Server-side behavior
+
         }
     }
 
-    /**
-     * Initialize the equipment for the Milly Knight.
-     */
-    @Override
-    protected void initEquipment(Random random, LocalDifficulty difficulty) {
-        super.initEquipment(random, difficulty);
-
-        // Debug logging
-        System.out.println("Initializing Milly Knight's equipment");
-
-        // Equip weapon
-        ItemStack weapon = random.nextFloat() < 0.5
-                ? new ItemStack(ModItems.BLACKBORN)
-                : new ItemStack(Items.DIAMOND_SWORD);
-        this.equipStack(EquipmentSlot.MAINHAND, weapon);
-
-
-        this.equipStack(EquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET));
-        this.equipStack(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
-
-        this.equipStack(EquipmentSlot.MAINHAND, weapon);
-
-
-    }
-
-    /**
-     * Get the armor items this entity is currently wearing.
-     */
-    @Override
-    public Iterable<ItemStack> getArmorItems() {
-        return equippedItems.subList(2, 6); // Use MobEntity's built-in method
-    }
-
-    /**
-     * Get the ItemStack currently equipped in a specific slot.
-     */
-    @Override
-    public ItemStack getEquippedStack(EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            // Access the main hand stack directly
-            return this.equippedItems.get(EquipmentSlot.MAINHAND.getEntitySlotId());
-        } else {
-            return super.getEquippedStack(slot); // Handle other slots
-        }
-    }
-
-    /**
-     * Equip an ItemStack to a specific slot.
-     */
-    @Override
-    public void equipStack(EquipmentSlot slot, ItemStack stack) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            // Set the main hand stack directly
-            this.equippedItems.set(EquipmentSlot.MAINHAND.getEntitySlotId(), stack);
-        } else {
-            super.equipStack(slot, stack); // Handle other slots
-        }
-    }
-
-    /**
-     * Define the main arm of the entity.
-     */
-    @Override
-    public Arm getMainArm() {
-        return Arm.RIGHT; // Default to right-handed
-    }
 
     @Override
     protected void dropLoot(DamageSource source, boolean causedByPlayer) {
