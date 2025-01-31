@@ -12,18 +12,26 @@ public class DashAbility {
 
         if (entity instanceof MobEntity mob && mob.getTarget() instanceof LivingEntity target) {
             double dx = target.getX() - entity.getX();
-            double dy = target.getY() - entity.getY();
             double dz = target.getZ() - entity.getZ();
 
-            // Apply dash movement vector
-            Vec3d dashVector = new Vec3d(
-                    (dx * 0.35) - (dx * 0.05),
-                    (dy * 0.35) - (dy * 0.05) + 0.15,
-                    (dz * 0.35) - (dz * 0.05)
-            );
+            double distance = Math.sqrt(dx * dx + dz * dz);
 
-            entity.setVelocity(dashVector);
-            entity.velocityModified = true; // Ensures movement is applied
+            // Define dash strength (higher value = farther dash)
+            double dashSpeed = 1.5;
+
+            // Determine whether to dash toward or away
+            Vec3d dashVector;
+            if (distance > 5.0) {
+                // Dash TOWARD the target if further than 5 blocks
+                dashVector = new Vec3d(dx, 0, dz).normalize().multiply(dashSpeed);
+            } else {
+                // Dash AWAY from the target if closer than 5 blocks
+                dashVector = new Vec3d(-dx, 0, -dz).normalize().multiply(dashSpeed);
+            }
+
+            // Apply velocity
+            mob.setVelocity(dashVector);
+            mob.velocityModified = true; // En
         }
     }
 }

@@ -62,7 +62,7 @@ public class QuinnKnightEntity extends HostileEntity {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 300)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 20)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 18)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 400)
                 .add(EntityAttributes.GENERIC_ARMOR, 10)

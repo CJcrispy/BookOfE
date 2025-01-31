@@ -1,10 +1,9 @@
 package net.cjcrispy.entity.custom;
 
+import net.cjcrispy.entity.ai.MillyKnightGoal;
 import net.cjcrispy.item.ModItems;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -13,8 +12,6 @@ import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -45,7 +42,7 @@ public class MillyKnightEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         // Attack-related goals
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // Attack logic
+        this.goalSelector.add(1, new MillyKnightGoal(this, 1.2, false)); // 20 ticks = 1 sec cooldown
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true)); // Target villagers proactively
@@ -62,11 +59,11 @@ public class MillyKnightEntity extends HostileEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 250)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 350)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 22)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64)
-                .add(EntityAttributes.GENERIC_ARMOR, 8)
+                .add(EntityAttributes.GENERIC_ARMOR, 6)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 6)
                 .add(EntityAttributes.GENERIC_SCALE, 1.35);
     }
