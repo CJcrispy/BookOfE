@@ -43,10 +43,14 @@ public class QuinnKnightEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         // Attack-related goals
-        this.goalSelector.add(1, new QuinnKnightGoal(this, 1.2, false)); // Attack logic
+        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // Attack logic
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, KingHajileEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true)); // Target villagers proactively
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, NickySummonerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, JoeRebelEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, SlimeChrisEntity.class, true));
         this.targetSelector.add(4, new RevengeGoal(this)); // Revenge against the last attacker
 
         // General AI behavior goals
@@ -54,6 +58,10 @@ public class QuinnKnightEntity extends HostileEntity {
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); // Look at players
         this.goalSelector.add(4, new LookAtEntityGoal(this, IronGolemEntity.class, 8.0F)); // Look at golems
         this.goalSelector.add(5, new LookAtEntityGoal(this, MillyKnightEntity.class, 8.0F)); // Look at villagers
+        this.goalSelector.add(5, new LookAtEntityGoal(this, SlimeChrisEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, KingHajileEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, NickySummonerEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, JoeRebelEntity.class, 8.0f));
         this.goalSelector.add(6, new LookAroundGoal(this)); // Look around when idle
         this.goalSelector.add(7, new SwimGoal(this)); // Swim when underwater
     }

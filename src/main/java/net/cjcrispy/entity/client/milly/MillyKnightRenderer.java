@@ -1,4 +1,4 @@
-package net.cjcrispy.entity.client;
+package net.cjcrispy.entity.client.milly;
 
 import net.cjcrispy.BookOfE;
 import net.cjcrispy.entity.custom.MillyKnightEntity;

@@ -35,12 +35,23 @@ public class ModItems {
                     .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 2, -1.4f))));
 
     // Spawn Eggs
-
     public static final Item MILLY_KNIGHT_SPAWN_EGG = registerItem("milly_knight_spawn_egg",
-            new SpawnEggItem(ModEntities.MILLY_KNIGHT, 0x9dc783, 0xbfaf5f, new Item.Settings()));
+            new SpawnEggItem(ModEntities.MILLY_KNIGHT, 0x9d9d9d, 0xabdbe3, new Item.Settings()));
 
     public static final Item QUINN_KNIGHT_SPAWN_EGG = registerItem("quinn_knight_spawn_egg",
-            new SpawnEggItem(ModEntities.QUINN_KNIGHT, 0x000000, 0xbfaf5f, new Item.Settings()));
+            new SpawnEggItem(ModEntities.QUINN_KNIGHT, 0xf10000, 0xabdbe3, new Item.Settings()));
+
+    public static final Item NICKY_SUMMONER_SPAWN_EGG = registerItem("nicky_summoner_spawn_egg",
+            new SpawnEggItem(ModEntities.NICKY_SUMMONER, 0x109607, 0xabdbe3, new Item.Settings()));
+
+    public static final Item JOE_REBEL_SPAWN_EGG = registerItem("joe_rebel_spawn_egg",
+            new SpawnEggItem(ModEntities.JOE_REBEL, 0x672dbe, 0xabdbe3, new Item.Settings()));
+
+    public static final Item SLIME_CHRIS_SPAWN_EGG = registerItem("slime_chris_spawn_egg",
+            new SpawnEggItem(ModEntities.CHRIS_SLIME, 0x1366e8, 0xabdbe3, new Item.Settings()));
+
+    public static final Item KING_HAJILE_SPAWN_EGG = registerItem("king_hajile_spawn_egg",
+            new SpawnEggItem(ModEntities.KING_HAJILE, 0xe8ce13, 0xabdbe3, new Item.Settings()));
 
     public static final Item DARK_WIZARD_SPAWN_EGG = registerItem("dark_wizard_spawn_egg",
             new SpawnEggItem(ModEntities.DARK_WIZARD, 0x6e33ff, 0x1e1a27, new Item.Settings()));
@@ -61,12 +72,6 @@ public class ModItems {
             entries.add(BEACH_BLADE);
             entries.add(BLACKBORN);
             entries.add(CALAMITY);
-
-        });
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries ->{
-            entries.add(MILLY_KNIGHT_SPAWN_EGG);
-            entries.add(DARK_WIZARD_SPAWN_EGG);
         });
     }
 }

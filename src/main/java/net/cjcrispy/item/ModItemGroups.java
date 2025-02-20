@@ -26,6 +26,10 @@ public class ModItemGroups {
                         entries.add(ModItems.MILLY_KNIGHT_SPAWN_EGG);
                         entries.add(ModItems.QUINN_KNIGHT_SPAWN_EGG);
                         entries.add(ModItems.DARK_WIZARD_SPAWN_EGG);
+                        entries.add(ModItems.NICKY_SUMMONER_SPAWN_EGG);
+                        entries.add(ModItems.JOE_REBEL_SPAWN_EGG);
+                        entries.add(ModItems.SLIME_CHRIS_SPAWN_EGG);
+                        entries.add(ModItems.KING_HAJILE_SPAWN_EGG);
 
                     }).build());
 

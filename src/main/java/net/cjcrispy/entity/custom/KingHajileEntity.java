@@ -10,7 +10,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -23,33 +24,29 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 
-public class MillyKnightEntity extends HostileEntity {
+public class KingHajileEntity extends HostileEntity {
 
     // Store equipped armor and hand items
     private final DefaultedList<ItemStack> equippedItems = DefaultedList.ofSize(6, ItemStack.EMPTY);
 
-    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Milly, Knight Commander"),
-            BossBar.Color.WHITE, BossBar.Style.NOTCHED_10);
+    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("King Hajile"),
+            BossBar.Color.YELLOW, BossBar.Style.NOTCHED_10);
 
-    public MillyKnightEntity(EntityType<? extends HostileEntity> entityType, World world) {
-
+    public KingHajileEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.initEquipment(world.getRandom(), world.getLocalDifficulty(this.getBlockPos()));
-        System.out.println("Milly Knight initialized");
+        System.out.println("King Hajile initialized");
     }
-
-
     @Override
     protected void initGoals() {
         // Attack-related goals
         this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // 20 ticks = 1 sec cooldown
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, KingHajileEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true)); // Target villagers proactively
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, NickySummonerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, JoeRebelEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, SlimeChrisEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true));
         this.targetSelector.add(4, new RevengeGoal(this)); // Revenge against the last attacker
 
         // General AI behavior goals
@@ -57,10 +54,6 @@ public class MillyKnightEntity extends HostileEntity {
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); // Look at players
         this.goalSelector.add(4, new LookAtEntityGoal(this, IronGolemEntity.class, 8.0F)); // Look at golems
         this.goalSelector.add(5, new LookAtEntityGoal(this, QuinnKnightEntity.class, 8.0F)); // Look at villagers
-        this.goalSelector.add(5, new LookAtEntityGoal(this, SlimeChrisEntity.class, 8.0F));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, KingHajileEntity.class, 8.0F));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, NickySummonerEntity.class, 8.0F));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, JoeRebelEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this)); // Look around when idle
         this.goalSelector.add(7, new SwimGoal(this)); // Swim when underwater
     }
@@ -103,7 +96,7 @@ public class MillyKnightEntity extends HostileEntity {
 
         // Equip weapon
         ItemStack weapon = random.nextFloat() < 0.5
-                ? new ItemStack(ModItems.CALAMITY)
+                ? new ItemStack(ModItems.ANGEL_SWORD)
                 : new ItemStack(Items.DIAMOND_SWORD);
         this.equipStack(EquipmentSlot.MAINHAND, weapon);
 
@@ -149,7 +142,7 @@ public class MillyKnightEntity extends HostileEntity {
     protected void dropLoot(DamageSource source, boolean causedByPlayer) {
         super.dropLoot(source, causedByPlayer);
 
-        this.dropItem(ModItems.BLACKBORN);
+        this.dropItem(ModItems.ANGEL_SWORD);
     }
 
     @Override

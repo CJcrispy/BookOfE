@@ -1,4 +1,4 @@
-package net.cjcrispy.entity.client;
+package net.cjcrispy.entity.client.quinn;
 
 import net.cjcrispy.BookOfE;
 

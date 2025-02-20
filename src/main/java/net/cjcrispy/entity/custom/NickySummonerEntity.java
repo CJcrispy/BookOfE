@@ -1,53 +1,43 @@
 package net.cjcrispy.entity.custom;
 
-import net.cjcrispy.entity.ai.MillyKnightGoal;
+import net.cjcrispy.entity.ai.NickySummonerGoal;
+import net.cjcrispy.entity.ai.QuinnKnightGoal;
 import net.cjcrispy.item.ModItems;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Arm;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 
-public class MillyKnightEntity extends HostileEntity {
+public class NickySummonerEntity extends HostileEntity{
 
-    // Store equipped armor and hand items
-    private final DefaultedList<ItemStack> equippedItems = DefaultedList.ofSize(6, ItemStack.EMPTY);
+    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Nicky, Sassy Summoner"),
+            BossBar.Color.GREEN, BossBar.Style.NOTCHED_10);
 
-    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Milly, Knight Commander"),
-            BossBar.Color.WHITE, BossBar.Style.NOTCHED_10);
 
-    public MillyKnightEntity(EntityType<? extends HostileEntity> entityType, World world) {
-
+    public NickySummonerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
-        this.initEquipment(world.getRandom(), world.getLocalDifficulty(this.getBlockPos()));
-        System.out.println("Milly Knight initialized");
+        System.out.println("Nicky Summoner initialized");
     }
-
 
     @Override
     protected void initGoals() {
         // Attack-related goals
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // 20 ticks = 1 sec cooldown
+        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // Attack logic
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, KingHajileEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true)); // Target Milly proactively
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, NickySummonerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, JoeRebelEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, SlimeChrisEntity.class, true));
         this.targetSelector.add(4, new RevengeGoal(this)); // Revenge against the last attacker
@@ -56,10 +46,10 @@ public class MillyKnightEntity extends HostileEntity {
         this.goalSelector.add(2, new WanderAroundFarGoal(this, 1.0)); // Wander randomly
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); // Look at players
         this.goalSelector.add(4, new LookAtEntityGoal(this, IronGolemEntity.class, 8.0F)); // Look at golems
-        this.goalSelector.add(5, new LookAtEntityGoal(this, QuinnKnightEntity.class, 8.0F)); // Look at villagers
+        this.goalSelector.add(5, new LookAtEntityGoal(this, MillyKnightEntity.class, 8.0F)); // Look at Milly
+        this.goalSelector.add(5, new LookAtEntityGoal(this, QuinnKnightEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, SlimeChrisEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, KingHajileEntity.class, 8.0F));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, NickySummonerEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, JoeRebelEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this)); // Look around when idle
         this.goalSelector.add(7, new SwimGoal(this)); // Swim when underwater
@@ -67,15 +57,14 @@ public class MillyKnightEntity extends HostileEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 350)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 300)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 22)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64)
-                .add(EntityAttributes.GENERIC_ARMOR, 6)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 6)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 18)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 2)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 400)
+                .add(EntityAttributes.GENERIC_ARMOR, 10)
                 .add(EntityAttributes.GENERIC_SCALE, 1.35);
     }
-
 
     /**
      * Entity tick logic (runs every tick).
@@ -86,70 +75,19 @@ public class MillyKnightEntity extends HostileEntity {
         // Add custom behavior here, such as effects or AI adjustments
         if (this.getWorld().isClient()) {
             // Client-side effects, like particles or animations
+
         } else {
             // Server-side behavior
+
         }
     }
 
-    /**
-     * Initialize the equipment for the Milly Knight.
-     */
-    @Override
-    protected void initEquipment(Random random, LocalDifficulty difficulty) {
-        super.initEquipment(random, difficulty);
-
-        // Debug logging
-        System.out.println("Initializing Milly Knight's equipment");
-
-        // Equip weapon
-        ItemStack weapon = random.nextFloat() < 0.5
-                ? new ItemStack(ModItems.CALAMITY)
-                : new ItemStack(Items.DIAMOND_SWORD);
-        this.equipStack(EquipmentSlot.MAINHAND, weapon);
-
-        // Verify equipment
-        System.out.println("Head: " + getEquippedStack(EquipmentSlot.HEAD));
-        System.out.println("Chest: " + getEquippedStack(EquipmentSlot.CHEST));
-        System.out.println("Mainhand: " + getEquippedStack(EquipmentSlot.MAINHAND));
-    }
-
-    /**
-     * Get the armor items this entity is currently wearing.
-     */
-    @Override
-    public Iterable<ItemStack> getArmorItems() {
-        return equippedItems.subList(2, 6); // Use MobEntity's built-in method
-    }
-
-    /**
-     * Get the ItemStack currently equipped in a specific slot.
-     */
-    @Override
-    public ItemStack getEquippedStack(EquipmentSlot slot) {
-        return equippedItems.get(slot.getEntitySlotId());
-    }
-
-    /**
-     * Equip an ItemStack to a specific slot.
-     */
-    @Override
-    public void equipStack(EquipmentSlot slot, ItemStack stack) {
-        equippedItems.set(slot.getEntitySlotId(), stack);
-    }
-
-    /**
-     * Define the main arm of the entity.
-     */
-    @Override
-    public Arm getMainArm() {
-        return Arm.RIGHT; // Default to right-handed
-    }
 
     @Override
     protected void dropLoot(DamageSource source, boolean causedByPlayer) {
         super.dropLoot(source, causedByPlayer);
 
-        this.dropItem(ModItems.BLACKBORN);
+        this.dropItem(ModItems.BEACH_BLADE);
     }
 
     @Override
@@ -179,3 +117,4 @@ public class MillyKnightEntity extends HostileEntity {
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
     }
 }
+

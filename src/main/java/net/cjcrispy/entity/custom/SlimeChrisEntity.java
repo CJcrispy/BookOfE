@@ -1,6 +1,5 @@
 package net.cjcrispy.entity.custom;
 
-import net.cjcrispy.entity.ai.MillyKnightGoal;
 import net.cjcrispy.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -10,7 +9,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -23,21 +23,19 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 
-public class MillyKnightEntity extends HostileEntity {
+public class SlimeChrisEntity extends HostileEntity {
 
     // Store equipped armor and hand items
     private final DefaultedList<ItemStack> equippedItems = DefaultedList.ofSize(6, ItemStack.EMPTY);
 
-    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Milly, Knight Commander"),
-            BossBar.Color.WHITE, BossBar.Style.NOTCHED_10);
+    private final ServerBossBar bossBar = new ServerBossBar(Text.literal("Chris, Slime Cultist"),
+            BossBar.Color.BLUE, BossBar.Style.NOTCHED_10);
 
-    public MillyKnightEntity(EntityType<? extends HostileEntity> entityType, World world) {
-
+    public SlimeChrisEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.initEquipment(world.getRandom(), world.getLocalDifficulty(this.getBlockPos()));
-        System.out.println("Milly Knight initialized");
+        System.out.println("Slime Chris initialized");
     }
-
 
     @Override
     protected void initGoals() {
@@ -49,7 +47,7 @@ public class MillyKnightEntity extends HostileEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, QuinnKnightEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, NickySummonerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, JoeRebelEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, SlimeChrisEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MillyKnightEntity.class, true));
         this.targetSelector.add(4, new RevengeGoal(this)); // Revenge against the last attacker
 
         // General AI behavior goals
@@ -57,10 +55,11 @@ public class MillyKnightEntity extends HostileEntity {
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F)); // Look at players
         this.goalSelector.add(4, new LookAtEntityGoal(this, IronGolemEntity.class, 8.0F)); // Look at golems
         this.goalSelector.add(5, new LookAtEntityGoal(this, QuinnKnightEntity.class, 8.0F)); // Look at villagers
-        this.goalSelector.add(5, new LookAtEntityGoal(this, SlimeChrisEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, MillyKnightEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, KingHajileEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, NickySummonerEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAtEntityGoal(this, JoeRebelEntity.class, 8.0F));
+
         this.goalSelector.add(6, new LookAroundGoal(this)); // Look around when idle
         this.goalSelector.add(7, new SwimGoal(this)); // Swim when underwater
     }
@@ -92,18 +91,18 @@ public class MillyKnightEntity extends HostileEntity {
     }
 
     /**
-     * Initialize the equipment for the Milly Knight.
+     * Initialize the equipment for the Slime Chris.
      */
     @Override
     protected void initEquipment(Random random, LocalDifficulty difficulty) {
         super.initEquipment(random, difficulty);
 
         // Debug logging
-        System.out.println("Initializing Milly Knight's equipment");
+        System.out.println("Initializing Slime Chris's equipment");
 
         // Equip weapon
         ItemStack weapon = random.nextFloat() < 0.5
-                ? new ItemStack(ModItems.CALAMITY)
+                ? new ItemStack(ModItems.SLIME_SWORD)
                 : new ItemStack(Items.DIAMOND_SWORD);
         this.equipStack(EquipmentSlot.MAINHAND, weapon);
 
@@ -149,7 +148,7 @@ public class MillyKnightEntity extends HostileEntity {
     protected void dropLoot(DamageSource source, boolean causedByPlayer) {
         super.dropLoot(source, causedByPlayer);
 
-        this.dropItem(ModItems.BLACKBORN);
+        this.dropItem(ModItems.SLIME_SWORD);
     }
 
     @Override
