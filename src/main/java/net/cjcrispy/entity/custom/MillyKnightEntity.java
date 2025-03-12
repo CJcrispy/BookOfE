@@ -42,7 +42,7 @@ public class MillyKnightEntity extends HostileEntity {
     @Override
     protected void initGoals() {
         // Attack-related goals
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1.2, false)); // 20 ticks = 1 sec cooldown
+        this.goalSelector.add(1, new MillyKnightGoal(this, 1.2, false)); // 20 ticks = 1 sec cooldown
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true)); // Target players
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true)); // Target iron golems
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, KingHajileEntity.class, true));

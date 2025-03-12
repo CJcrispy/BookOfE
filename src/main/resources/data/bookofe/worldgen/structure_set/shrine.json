@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "bookofe:shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1694767080,
+    "spacing": 2,
+    "separation": 1
+  }
+}

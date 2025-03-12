@@ -1,7 +1,9 @@
 package net.cjcrispy;
 
 import net.cjcrispy.entity.ModEntities;
+import net.cjcrispy.entity.client.blackbird_warrior.BlackBirdRenderer;
 import net.cjcrispy.entity.client.dark_wizard.DarkWizardRenderer;
+import net.cjcrispy.entity.client.quinn.ShadowQuinnRenderer;
 import net.cjcrispy.entity.custom.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -62,5 +64,9 @@ public class BookOfEClient implements ClientModInitializer {
                     }
                 });
         EntityRendererRegistry.register(ModEntities.DARK_WIZARD, DarkWizardRenderer::new);
+
+        EntityRendererRegistry.register(ModEntities.BLACKBIRD_WARRIOR, BlackBirdRenderer::new);
+
+        EntityRendererRegistry.register(ModEntities.SHADOW_QUINN, ShadowQuinnRenderer::new);
     }
 }

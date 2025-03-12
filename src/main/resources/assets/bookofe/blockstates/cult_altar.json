@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bookofe:block/cult_altar"
+    },
+    "facing=south": {
+      "model": "bookofe:block/cult_altar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bookofe:block/cult_altar",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "bookofe:block/cult_altar",
+      "y": 90
+    }
+  }
+}

@@ -45,6 +45,16 @@ public class ModEntities {
             EntityType.Builder.create(DarkWizardEntity::new, SpawnGroup.CREATURE)
                     .dimensions(1f, 2.5f).build());
 
+    public static final EntityType<BlackBirdEntity> BLACKBIRD_WARRIOR = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "blackbird"),
+            EntityType.Builder.create(BlackBirdEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(1f, 2.5f).build());
+
+    public static final EntityType<ShadowQuinnEntity> SHADOW_QUINN = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "shadowquinn"),
+            EntityType.Builder.create(ShadowQuinnEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(1f, 2.5f).build());
+
     public static void registerModEntities() {
         BookOfE.LOGGER.info("Registering Mod Entities for " + BookOfE.MOD_ID);
     }

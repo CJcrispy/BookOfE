@@ -1,9 +1,8 @@
 package net.cjcrispy;
 
+import net.cjcrispy.block.ModBlocks;
 import net.cjcrispy.entity.ModEntities;
-import net.cjcrispy.entity.custom.DarkWizardEntity;
-import net.cjcrispy.entity.custom.MillyKnightEntity;
-import net.cjcrispy.entity.custom.QuinnKnightEntity;
+import net.cjcrispy.entity.custom.*;
 import net.cjcrispy.item.ModItemGroups;
 import net.cjcrispy.item.ModItems;
 import net.fabricmc.api.ModInitializer;
@@ -21,14 +20,17 @@ public class BookOfE implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 
 		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 		ModEntities.registerModEntities();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.MILLY_KNIGHT, MillyKnightEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.QUINN_KNIGHT, QuinnKnightEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.NICKY_SUMMONER, MillyKnightEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.JOE_REBEL, MillyKnightEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CHRIS_SLIME, MillyKnightEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.KING_HAJILE, MillyKnightEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.NICKY_SUMMONER, NickySummonerEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.JOE_REBEL, JoeRebelEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CHRIS_SLIME, SlimeChrisEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.KING_HAJILE, KingHajileEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.DARK_WIZARD, DarkWizardEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.BLACKBIRD_WARRIOR, BlackBirdEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.SHADOW_QUINN, ShadowQuinnEntity.createAttributes());
 	}
 }

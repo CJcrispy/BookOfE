@@ -1,6 +1,7 @@
 package net.cjcrispy.item;
 
 import net.cjcrispy.BookOfE;
+import net.cjcrispy.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -17,19 +18,27 @@ public class ModItemGroups {
             FabricItemGroup.builder().icon(() -> new ItemStack(Items.GOLDEN_APPLE))
                     .displayName(Text.translatable("itemgroup.bookofe.book_of_e_items"))
                     .entries((displayContext, entries) -> {
+                        entries.add(ModItems.ELI_SUMMONING_KEY);
+
+                        entries.add(ModBlocks.CULT_ALTAR);
+
                         entries.add(ModItems.WORM_HAMMER);
                         entries.add(ModItems.CALAMITY);
                         entries.add(ModItems.BLACKBORN);
                         entries.add(ModItems.BEACH_BLADE);
                         entries.add(ModItems.ANGEL_SWORD);
                         entries.add(ModItems.SLIME_SWORD);
+
+                        entries.add(ModItems.DARK_WIZARD_SPAWN_EGG);
+                        entries.add(ModItems.BLACKBIRD_WARRIOR_SPAWN_EGG);
+
                         entries.add(ModItems.MILLY_KNIGHT_SPAWN_EGG);
                         entries.add(ModItems.QUINN_KNIGHT_SPAWN_EGG);
-                        entries.add(ModItems.DARK_WIZARD_SPAWN_EGG);
                         entries.add(ModItems.NICKY_SUMMONER_SPAWN_EGG);
                         entries.add(ModItems.JOE_REBEL_SPAWN_EGG);
                         entries.add(ModItems.SLIME_CHRIS_SPAWN_EGG);
                         entries.add(ModItems.KING_HAJILE_SPAWN_EGG);
+                        entries.add(ModItems.SHADOWQUINN_WARRIOR_SPAWN_EGG);
 
                     }).build());
 

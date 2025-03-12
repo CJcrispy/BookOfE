@@ -10,6 +10,11 @@ import net.minecraft.util.Identifier;
 
 public class ModItems {
 
+    // Summoning keys
+    public static final Item ELI_SUMMONING_KEY = registerItem("summon_key_e", new Item(new Item.Settings()));
+
+
+    // Weapons
     public static final Item WORM_HAMMER = registerItem("worm_hammer",
             new SwordItem(ToolMaterials.NETHERITE, new Item.Settings()
                     .attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.NETHERITE, 3, -2.4f))));
@@ -55,6 +60,12 @@ public class ModItems {
 
     public static final Item DARK_WIZARD_SPAWN_EGG = registerItem("dark_wizard_spawn_egg",
             new SpawnEggItem(ModEntities.DARK_WIZARD, 0x6e33ff, 0x1e1a27, new Item.Settings()));
+
+    public static final Item BLACKBIRD_WARRIOR_SPAWN_EGG = registerItem("blackbird_spawn_egg",
+            new SpawnEggItem(ModEntities.BLACKBIRD_WARRIOR, 0x000000, 0x524d4d, new Item.Settings()));
+
+    public static final Item SHADOWQUINN_WARRIOR_SPAWN_EGG = registerItem("shadowquinn_spawn_egg",
+            new SpawnEggItem(ModEntities.SHADOW_QUINN, 0x6e33ff, 0x524d4d, new Item.Settings()));
 
 
     // helper function

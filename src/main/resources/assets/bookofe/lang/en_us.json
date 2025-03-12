@@ -1,4 +1,8 @@
 {
+  "item.bookofe.summon_key_e": "King's Key",
+
+  "block.bookofe.cult_altar": "Cult Altar",
+
   "item.bookofe.worm_hammer": "Worm Hammer",
   "item.bookofe.angel_sword": "Angel Sword",
   "item.bookofe.beach_blade": "Beach Blade",
@@ -8,19 +12,23 @@
 
   "item.bookofe.milly_knight_spawn_egg": "Milly Knight Egg",
   "item.bookofe.quinn_knight_spawn_egg": "Quinn Knight Egg",
-  "item.bookofe.dark_wizard_spawn_egg": "Dark Wizard Egg",
   "item.bookofe.nicky_summoner_spawn_egg": "Nicky Summoner Egg",
   "item.bookofe.joe_rebel_spawn_egg": "Joe Rebel Egg",
   "item.bookofe.slime_chris_spawn_egg": "Chris Slime Egg",
   "item.bookofe.king_hajile_spawn_egg": "King Hajile Egg",
+  "item.bookofe.dark_wizard_spawn_egg": "Dark Wizard Egg",
+  "item.bookofe.blackbird_spawn_egg": "Blackbird Warrior Egg",
+  "item.bookofe.shadowquinn_spawn_egg": "Shadow Quinn Egg",
 
   "entity.bookofe.milly_knight": "Milly, Knight Commander",
   "entity.bookofe.quinn_knight": "Quinn, Fallen Knight",
-  "entity.bookofe.dark_wizard": "Dark Wizard",
   "entity.bookofe.nicky_summoner": "Nicky, Sassy Summoner",
   "entity.bookofe.joe_rebel": "Joe, Rebel Leader",
   "entity.bookofe.slime_chris": "Chris, Slime Cultist",
   "entity.bookofe.king_hajile": "King Hajile",
+  "entity.bookofe.dark_wizard": "Dark Wizard",
+  "entity.bookofe.blackbird": "Blackbird Warrior",
+  "entity.bookofe.shadowquinn": "Shadow Quinn",
 
   "itemgroup.bookofe.book_of_e_items": "Book of E Items"
 }
