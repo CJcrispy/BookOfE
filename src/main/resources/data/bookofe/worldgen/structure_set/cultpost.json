@@ -1,18 +1,18 @@
 {
   "structures": [
     {
-      "structure": "bookofe:shrine",
+      "structure": "bookofe:cultpost",
       "weight": 1
     }
   ],
   "placement": {
+    "salt": 499672,
+    "spacing": 100,
+    "separation": 50,
     "type": "minecraft:random_spread",
-    "salt": 1694767080,
-    "spacing": 16,
-    "separation": 10,
     "exclusion_zone": {
       "chunk_count": 15,
-      "other_set": "minecraft:villages"
+      "other_set": "bookofe:hut"
     }
   }
 }

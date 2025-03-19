@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "bookofe:shrine",
+      "structure": "bookofe:hut",
       "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 1694767080,
+    "salt": 1646207470,
     "spacing": 16,
     "separation": 10,
     "exclusion_zone": {
