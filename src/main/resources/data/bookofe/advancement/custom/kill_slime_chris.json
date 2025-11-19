@@ -1,0 +1,44 @@
+{
+  "parent": "bookofe:discover_shrine",
+  "display": {
+    "icon": {
+      "id": "bookofe:slime_hammer"
+    },
+    "title": {
+      "translate": "advancement.bookofe.kill_slime_chris.title"
+    },
+    "description": {
+      "translate": "advancement.bookofe.kill_slime_chris.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "killed_slime_chris": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "bookofe:slime_chris"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "killed_slime_chris"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}
+

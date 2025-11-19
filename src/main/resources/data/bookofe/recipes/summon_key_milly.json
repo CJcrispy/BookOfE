@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " N ",
+    "NEN",
+    " I "
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "bookofe:summon_key_milly",
+    "count": 1
+  },
+  "fabric:conditions": [
+    {
+      "type": "fabric:advancement",
+      "advancement": "bookofe:discover_shrine"
+    }
+  ]
+}
+

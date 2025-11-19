@@ -1,0 +1,39 @@
+{
+  "commoner": [
+    "Bob",
+    "Steve",
+    "Alex",
+    "Charlie",
+    "Danny",
+    "Frank",
+    "George",
+    "Henry",
+    "Ivan",
+    "Jack"
+  ],
+  "mage": [
+    "Merlin",
+    "Gandalf",
+    "Zephyr",
+    "Aether",
+    "Nova",
+    "Luna",
+    "Stella",
+    "Orion",
+    "Celeste",
+    "Aurora"
+  ],
+  "warrior": [
+    "Ares",
+    "Thor",
+    "Blade",
+    "Titan",
+    "Vex",
+    "Rex",
+    "Max",
+    "Zane",
+    "Kane",
+    "Axel"
+  ]
+}
+

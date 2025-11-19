@@ -23,6 +23,9 @@
 		],
 		"client": [
 			"net.cjcrispy.BookOfEClient"
+		],
+		"rei_client": [
+			"net.cjcrispy.rei.BookOfEReiPlugin"
 		]
 	},
 	"mixins": [
@@ -35,6 +38,6 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"rei": "*"
 	}
 }

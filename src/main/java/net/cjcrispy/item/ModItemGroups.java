@@ -13,37 +13,32 @@ import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
 
-    public static final ItemGroup BOOK_OF_E_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
-            Identifier.of(BookOfE.MOD_ID, "book_of_e_items"),
-            FabricItemGroup.builder().icon(() -> new ItemStack(Items.GOLDEN_APPLE))
-                    .displayName(Text.translatable("itemgroup.bookofe.book_of_e_items"))
-                    .entries((displayContext, entries) -> {
-                        entries.add(ModItems.ELI_SUMMONING_KEY);
-
-                        entries.add(ModBlocks.CULT_ALTAR);
-
-                        entries.add(ModItems.WORM_HAMMER);
-                        entries.add(ModItems.CALAMITY);
-                        entries.add(ModItems.BLACKBORN);
-                        entries.add(ModItems.BEACH_BLADE);
-                        entries.add(ModItems.ANGEL_SWORD);
-                        entries.add(ModItems.SLIME_SWORD);
-
-                        entries.add(ModItems.DARK_WIZARD_SPAWN_EGG);
-                        entries.add(ModItems.BLACKBIRD_WARRIOR_SPAWN_EGG);
-
-                        entries.add(ModItems.MILLY_KNIGHT_SPAWN_EGG);
-                        entries.add(ModItems.QUINN_KNIGHT_SPAWN_EGG);
-                        entries.add(ModItems.NICKY_SUMMONER_SPAWN_EGG);
-                        entries.add(ModItems.JOE_REBEL_SPAWN_EGG);
-                        entries.add(ModItems.SLIME_CHRIS_SPAWN_EGG);
-                        entries.add(ModItems.KING_HAJILE_SPAWN_EGG);
-                        entries.add(ModItems.SHADOWQUINN_WARRIOR_SPAWN_EGG);
-
-                    }).build());
+    public static ItemGroup BOOK_OF_E_ITEMS_GROUP;
 
     // Register Groups
     public static void registerItemGroups() {
         BookOfE.LOGGER.info("Registering Item Groups for " + BookOfE.MOD_ID);
+        
+        // Register item group after items and blocks are loaded
+        BOOK_OF_E_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
+                Identifier.of(BookOfE.MOD_ID, "book_of_e_items"),
+                FabricItemGroup.builder().icon(() -> new ItemStack(Items.GOLDEN_APPLE))
+                        .displayName(Text.translatable("itemgroup.bookofe.book_of_e_items"))
+                        .entries((displayContext, entries) -> {
+                            entries.add(ModItems.NICKY_SUMMONING_KEY);
+                            entries.add(ModItems.ELI_SUMMONING_KEY);
+                            entries.add(ModItems.MILLY_KEY);
+                            entries.add(ModItems.JOE_KEY);
+
+                            entries.add(ModBlocks.CULT_ALTAR);
+
+                            entries.add(ModItems.WORM_HAMMER);
+                            entries.add(ModItems.CALAMITY);
+                            entries.add(ModItems.BLACKBORN);
+                            entries.add(ModItems.BEACH_BLADE);
+                            entries.add(ModItems.MOON_SWORD);
+                            entries.add(ModItems.SLIME_HAMMER);
+
+                        }).build());
     }
 }

@@ -2,6 +2,7 @@ package net.cjcrispy.entity.custom;
 
 
 
+import net.cjcrispy.config.MobConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -49,12 +50,17 @@ public class DarkWizardEntity extends HostileEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 50)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 10);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, MobConfig.DarkWizard.MAX_HEALTH)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, MobConfig.DarkWizard.MOVEMENT_SPEED)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, MobConfig.DarkWizard.ATTACK_DAMAGE)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, MobConfig.DarkWizard.FOLLOW_RANGE);
     }
 
+
+    @Override
+    public boolean isAffectedByDaylight() {
+        return false; // DarkWizard can survive in the sun
+    }
 
     @Override
     public void tick() {

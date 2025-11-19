@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " D ",
+    "DED",
+    " I "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "bookofe:summon_key_eli",
+    "count": 1
+  },
+  "fabric:conditions": [
+    {
+      "type": "fabric:advancement",
+      "advancement": "bookofe:discover_shrine"
+    }
+  ]
+}
+

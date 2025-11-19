@@ -15,10 +15,6 @@ public class ModEntities {
             EntityType.Builder.create(MillyKnightEntity::new, SpawnGroup.CREATURE)
                     .dimensions(1f, 2.5f).build());
 
-    public static final EntityType<QuinnKnightEntity> QUINN_KNIGHT = Registry.register(Registries.ENTITY_TYPE,
-            Identifier.of(BookOfE.MOD_ID, "quinn_knight"),
-            EntityType.Builder.create(QuinnKnightEntity::new, SpawnGroup.CREATURE)
-                    .dimensions(1f, 2.5f).build());
 
     public static final EntityType<NickySummonerEntity> NICKY_SUMMONER = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(BookOfE.MOD_ID, "nicky_summoner"),
@@ -28,6 +24,11 @@ public class ModEntities {
     public static final EntityType<JoeRebelEntity> JOE_REBEL = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(BookOfE.MOD_ID, "joe_rebel"),
             EntityType.Builder.create(JoeRebelEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(1f, 2.5f).build());
+    
+    public static final EntityType<JoeRebelCloneEntity> JOE_REBEL_CLONE = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "joe_rebel_clone"),
+            EntityType.Builder.create(JoeRebelCloneEntity::new, SpawnGroup.CREATURE)
                     .dimensions(1f, 2.5f).build());
 
     public static final EntityType<SlimeChrisEntity> CHRIS_SLIME = Registry.register(Registries.ENTITY_TYPE,
@@ -42,7 +43,7 @@ public class ModEntities {
 
     public static final EntityType<DarkWizardEntity> DARK_WIZARD = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(BookOfE.MOD_ID, "dark_wizard"),
-            EntityType.Builder.create(DarkWizardEntity::new, SpawnGroup.CREATURE)
+            EntityType.Builder.create(DarkWizardEntity::new, SpawnGroup.MONSTER)
                     .dimensions(1f, 2.5f).build());
 
     public static final EntityType<BlackBirdEntity> BLACKBIRD_WARRIOR = Registry.register(Registries.ENTITY_TYPE,
@@ -54,6 +55,21 @@ public class ModEntities {
             Identifier.of(BookOfE.MOD_ID, "shadowquinn"),
             EntityType.Builder.create(ShadowQuinnEntity::new, SpawnGroup.CREATURE)
                     .dimensions(1f, 2.5f).build());
+
+    public static final EntityType<SlimeCommonEntity> SLIME_COMMON = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "slime_common"),
+            EntityType.Builder.create(SlimeCommonEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(0.6f, 0.6f).build());
+
+    public static final EntityType<SlimeMageEntity> SLIME_MAGE = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "slime_mage"),
+            EntityType.Builder.create(SlimeMageEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(0.6f, 0.6f).build());
+
+    public static final EntityType<SlimeWarriorEntity> SLIME_WARRIOR = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(BookOfE.MOD_ID, "slime_warrior"),
+            EntityType.Builder.create(SlimeWarriorEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(0.6f, 0.6f).build());
 
     public static void registerModEntities() {
         BookOfE.LOGGER.info("Registering Mod Entities for " + BookOfE.MOD_ID);

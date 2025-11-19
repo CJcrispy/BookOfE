@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " O ",
+    "OEO",
+    " I "
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "bookofe:summon_key_joe",
+    "count": 1
+  },
+  "fabric:conditions": [
+    {
+      "type": "fabric:advancement",
+      "advancement": "bookofe:discover_shrine"
+    }
+  ]
+}
+

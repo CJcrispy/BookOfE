@@ -1,0 +1,43 @@
+{
+  "parent": "bookofe:discover_shrine",
+  "display": {
+    "icon": {
+      "id": "bookofe:the_black_blade"
+    },
+    "title": {
+      "translate": "advancement.bookofe.kill_milly_knight.title"
+    },
+    "description": {
+      "translate": "advancement.bookofe.kill_milly_knight.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "killed_milly_knight": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "bookofe:milly_knight"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "killed_milly_knight"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}

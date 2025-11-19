@@ -1,0 +1,44 @@
+{
+  "parent": "bookofe:discover_shrine",
+  "display": {
+    "icon": {
+      "id": "bookofe:beach_blade"
+    },
+    "title": {
+      "translate": "advancement.bookofe.kill_nicky_summoner.title"
+    },
+    "description": {
+      "translate": "advancement.bookofe.kill_nicky_summoner.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "killed_nicky_summoner": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "bookofe:nicky_summoner"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "killed_nicky_summoner"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}
+

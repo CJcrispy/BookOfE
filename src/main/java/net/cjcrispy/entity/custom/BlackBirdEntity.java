@@ -1,6 +1,6 @@
 package net.cjcrispy.entity.custom;
 
-import net.minecraft.entity.Entity;
+import net.cjcrispy.config.MobConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -11,22 +11,32 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class BlackBirdEntity extends HostileEntity implements GeoEntity {
 
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-    private boolean isDying = false;
+    private boolean shouldExplodeOnDeath = false;
+    private int attackAnimationTimer = 0;
 
     public BlackBirdEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 10;
+    }
+    
+    public void setShouldExplodeOnDeath(boolean shouldExplode) {
+        this.shouldExplodeOnDeath = shouldExplode;
+    }
+    
+    public boolean shouldExplodeOnDeath() {
+        return this.shouldExplodeOnDeath;
     }
 
 
@@ -50,12 +60,12 @@ public class BlackBirdEntity extends HostileEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10F)
-                .add(EntityAttributes.GENERIC_ARMOR, 0F)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5F)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 10)
-                .add(EntityAttributes.GENERIC_SCALE, 1.35);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, MobConfig.BlackBird.MAX_HEALTH)
+                .add(EntityAttributes.GENERIC_ARMOR, MobConfig.BlackBird.ARMOR)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, MobConfig.BlackBird.MOVEMENT_SPEED)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, MobConfig.BlackBird.ATTACK_DAMAGE)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, MobConfig.BlackBird.FOLLOW_RANGE)
+                .add(EntityAttributes.GENERIC_SCALE, MobConfig.BlackBird.SCALE);
     }
 
 
@@ -64,6 +74,10 @@ public class BlackBirdEntity extends HostileEntity implements GeoEntity {
         super.tick();
         if (this.getWorld().isClient()) {
             // Client-side effects, like particles or animations
+            // Decrement attack animation timer
+            if (attackAnimationTimer > 0) {
+                attackAnimationTimer--;
+            }
         } else {
             // Server-side behavior
         }
@@ -71,42 +85,55 @@ public class BlackBirdEntity extends HostileEntity implements GeoEntity {
 
     @Override
     public void onDeath(DamageSource damageSource) {
-        if (!this.isDying) {
-            this.isDying = true;
-            this.getWorld().sendEntityStatus(this, (byte) 60); // Triggers animation
+        // Handle explosion before calling super.onDeath()
+        if (this.shouldExplodeOnDeath && !this.getWorld().isClient() && this.getWorld() instanceof ServerWorld serverWorld) {
+            // Create a small explosion on death
+            serverWorld.createExplosion(this, this.getX(), this.getY(), this.getZ(), 2.0F, World.ExplosionSourceType.MOB);
         }
+        
         super.onDeath(damageSource);
-    }
 
+        // Example: Add a death sound or custom effects
+        this.getWorld().sendEntityStatus(this, (byte) 60); // Play the death particles
+    }
+    
     @Override
-    public void handleStatus(byte status) {
-        if (status == 60) {
-            this.isDying = true;
-        }
-        super.handleStatus(status);
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("ShouldExplodeOnDeath", this.shouldExplodeOnDeath);
     }
-
-    private static final RawAnimation ATTACK_ANIMATION = RawAnimation.begin().thenPlay("attack");
-
-    private final AnimationController ATTACK_ANIMATION_CONTROLLER = new AnimationController<>(this, "attack_controller", state -> PlayState.STOP)
-            .triggerableAnim("attack_animation", ATTACK_ANIMATION).transitionLength(5);
-
+    
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.shouldExplodeOnDeath = nbt.getBoolean("ShouldExplodeOnDeath");
+    }
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate));
-        controllers.add(
-                DefaultAnimations.genericWalkIdleController(this).transitionLength(5),
-                ATTACK_ANIMATION_CONTROLLER,
-                DefaultAnimations.genericLivingController(this)
-        );
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         // If the entity is dead, play the death animation and stop further updates
-        if (this.isDying) {
+        if (this.isDead()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE; // Stop further animation updates
+            return PlayState.STOP; // Stop further animation updates
+        }
+
+        // Check if attack animation is currently playing - let it finish
+        // Attack animation typically lasts about 20 ticks (1 second), so we'll use a timer
+        if (attackAnimationTimer > 0) {
+            // Keep the attack animation playing
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
+            return PlayState.CONTINUE;
+        }
+
+        // Check if entity is attacking - start the attack animation
+        if (this.handSwinging) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
+            attackAnimationTimer = 20; // Set timer to allow animation to play for ~1 second
+            return PlayState.CONTINUE;
         }
 
         if (tAnimationState.isMoving()) {

@@ -1,18 +1,18 @@
 package net.cjcrispy.entity.ai;
 
 import net.cjcrispy.entity.custom.MillyKnightEntity;
-import net.cjcrispy.item.ModItems;
-import net.cjcrispy.procedure.common.DashAbility;
+import net.cjcrispy.procedure.common.CrossbowBarrageAbility;
 import net.cjcrispy.procedure.milly.*;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class MillyKnightGoal extends Goal {
     private final MillyKnightEntity mob;
@@ -20,28 +20,27 @@ public class MillyKnightGoal extends Goal {
     private final boolean pauseWhenMobIdle;
     private Path path;
     private int updateCountdownTicks;
-    private int cooldown;
-    private static final int ATTACK_INTERVAL = 40; // 2-second cooldown
+    private int ticksUntilNextAttack;
+    private int restPeriodTicks = 0; // Tracks rest period between attacks
+    private static final int DEFAULT_ATTACK_INTERVAL = 15; // shorter base cadence
+    private static final int REST_PERIOD_DURATION = 30; // 1.5 seconds of rest between attacks (dance rhythm)
     private long lastUpdateTime;
 
-    // Enum to manage attack states
-    private enum AttackState {
-        MELEE, CHARGING_SLASH, CHAIN_GRAB, SPINNING_CROSS_SLASH, DASH
-    }
-
-    private AttackState currentState = AttackState.MELEE; // Default attack state
+    private final List<AttackPhase> attackPhases = new ArrayList<>();
+    private int currentAttackIndex = 0;
 
     public MillyKnightGoal(MillyKnightEntity mob, double speed, boolean pauseWhenMobIdle) {
         this.mob = mob;
         this.speed = speed;
         this.pauseWhenMobIdle = pauseWhenMobIdle;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
+        registerDefaultAttacks();
     }
 
     @Override
     public boolean canStart() {
         long currentTime = mob.getWorld().getTime();
-        if (currentTime - lastUpdateTime < ATTACK_INTERVAL) return false;
+        if (currentTime - lastUpdateTime < DEFAULT_ATTACK_INTERVAL) return false;
 
         lastUpdateTime = currentTime;
         LivingEntity target = mob.getTarget();
@@ -62,7 +61,8 @@ public class MillyKnightGoal extends Goal {
         mob.getNavigation().startMovingAlong(path, speed);
         mob.setAttacking(true);
         updateCountdownTicks = 0;
-        cooldown = 0;
+        ticksUntilNextAttack = 0;
+        restPeriodTicks = 0;
     }
 
     @Override
@@ -83,65 +83,150 @@ public class MillyKnightGoal extends Goal {
         if (target == null) return;
 
         mob.getLookControl().lookAt(target, 30.0F, 30.0F);
-        updateCountdownTicks = Math.max(updateCountdownTicks - 1, 0);
 
+        if (mob.isCrossbowBarrageActive()) {
+            mob.getNavigation().stop();
+            restPeriodTicks = Math.max(restPeriodTicks, 5);
+            return;
+        }
+        
+        // Handle rest period - during rest, slow down movement and don't attack
+        if (restPeriodTicks > 0) {
+            restPeriodTicks--;
+            // Slow movement during rest period (dance rhythm - gives player time to heal)
+            updateCountdownTicks = Math.max(updateCountdownTicks - 1, 0);
+            if (updateCountdownTicks <= 0) {
+                updateCountdownTicks = 4 + mob.getRandom().nextInt(7);
+                // Use reduced speed during rest (30% of normal speed)
+                double restSpeed = speed * 0.3;
+                if (!mob.getNavigation().startMovingTo(target, restSpeed)) updateCountdownTicks += 15;
+            }
+            return; // Don't attack during rest period
+        }
+
+        // Normal movement when not resting
+        updateCountdownTicks = Math.max(updateCountdownTicks - 1, 0);
         if (updateCountdownTicks <= 0) {
             updateCountdownTicks = 4 + mob.getRandom().nextInt(7);
             if (!mob.getNavigation().startMovingTo(target, speed)) updateCountdownTicks += 15;
         }
 
-        cooldown = Math.max(cooldown - 1, 0);
-        executeAttack(target);
+        // Only attack if not in rest period
+        if (ticksUntilNextAttack > 0) {
+            ticksUntilNextAttack--;
+        } else {
+            executeAttack(target);
+        }
     }
 
-    // Executes the current attack based on the state
     private void executeAttack(LivingEntity target) {
-        if (!canAttack(target)) return;
+        AttackPhase phase = selectNextAttackPhase(target);
+        if (phase == null) return;
 
-        resetCooldown();
+        phase.perform(new AttackContext(mob, target));
+        ticksUntilNextAttack = phase.cooldownTicks();
+        
+        // Start rest period after attack (creates dance rhythm - attack then pause)
+        restPeriodTicks = REST_PERIOD_DURATION;
+    }
 
-        switch (currentState) {
-            case MELEE:
-                ItemStack weapon = new ItemStack(ModItems.BLACKBORN);
-                mob.equipStack(EquipmentSlot.MAINHAND, weapon); // Equip in the main hand
-                mob.setStackInHand(Hand.MAIN_HAND, weapon); // Ensure it updates visually
-                mob.swingHand(Hand.MAIN_HAND);
-                mob.tryAttack(target);
-                break;
+    private AttackPhase selectNextAttackPhase(LivingEntity target) {
+        if (attackPhases.isEmpty()) return null;
 
+        AttackContext context = new AttackContext(mob, target);
+        int checked = 0;
 
-            case DASH:
-                DashAbility.execute(mob);
-                break;
+        while (checked < attackPhases.size()) {
+            AttackPhase phase = attackPhases.get(currentAttackIndex);
+            currentAttackIndex = (currentAttackIndex + 1) % attackPhases.size();
 
-            case CHAIN_GRAB:
-                MillyKnightChainGrab.execute(mob);
-                break;
-
-            case SPINNING_CROSS_SLASH:
-                MillyKnightSpinngCrossSlash.execute(mob);
-                break;
-
-            case CHARGING_SLASH:
-                MillyKnightChargingSlash.execute(mob);
-                break;
+            if (phase.canExecute(context)) {
+                return phase;
+            }
+            checked++;
         }
 
-        switchState(); // Change to the next attack after execution
+        return null;
     }
 
-    // Switches to the next attack state in sequence
-    private void switchState() {
-        AttackState[] states = AttackState.values();
-        int nextIndex = (currentState.ordinal() + 1) % states.length;
-        currentState = states[nextIndex];
+    private void registerDefaultAttacks() {
+        attackPhases.add(new AttackPhase(
+                MillyKnightGoal::isInMeleeRange,
+                context -> {
+                    context.mob.ensureBlackbornEquipped();
+                    context.mob.swingHand(Hand.MAIN_HAND);
+                    context.mob.tryAttack(context.target);
+                },
+                DEFAULT_ATTACK_INTERVAL
+        ));
+
+        attackPhases.add(new AttackPhase(
+                context -> true,
+                context -> {
+                    CrossbowBarrageAbility.execute(context.mob, context.target);
+                },
+                DEFAULT_ATTACK_INTERVAL + 12
+        ));
+
+        attackPhases.add(new AttackPhase(
+                context -> context.mob.squaredDistanceTo(context.target) <= 36,
+                context -> {
+                    context.mob.ensureBlackbornEquipped();
+                    MillyKnightChainGrab.execute(context.mob);
+                },
+                DEFAULT_ATTACK_INTERVAL + 4
+        ));
+
+        attackPhases.add(new AttackPhase(
+                context -> context.mob.squaredDistanceTo(context.target) <= 16,
+                context -> {
+                    context.mob.ensureBlackbornEquipped();
+                    MillyKnightSpinngCrossSlash.execute(context.mob);
+                },
+                DEFAULT_ATTACK_INTERVAL + 8
+        ));
+
+        attackPhases.add(new AttackPhase(
+                context -> context.mob.squaredDistanceTo(context.target) <= 49,
+                context -> {
+                    context.mob.ensureBlackbornEquipped();
+                    MillyKnightChargingSlash.execute(context.mob);
+                },
+                DEFAULT_ATTACK_INTERVAL + 10
+        ));
     }
 
-    private void resetCooldown() {
-        cooldown = ATTACK_INTERVAL;
+    private static boolean isInMeleeRange(AttackContext context) {
+        return context.mob.isInAttackRange(context.target) && context.mob.getVisibilityCache().canSee(context.target);
     }
 
-    private boolean canAttack(LivingEntity target) {
-        return cooldown <= 0 && mob.isInAttackRange(target) && mob.getVisibilityCache().canSee(target);
+    public void addAttackPhase(Predicate<AttackContext> canExecute, Consumer<AttackContext> action, int cooldownTicks) {
+        attackPhases.add(new AttackPhase(canExecute, action, cooldownTicks));
+    }
+
+    private record AttackContext(MillyKnightEntity mob, LivingEntity target) { }
+
+    private static final class AttackPhase {
+        private final Predicate<AttackContext> canExecute;
+        private final Consumer<AttackContext> action;
+        private final int cooldownTicks;
+
+        private AttackPhase(Predicate<AttackContext> canExecute, Consumer<AttackContext> action, int cooldownTicks) {
+            this.canExecute = canExecute;
+            this.action = action;
+            this.cooldownTicks = Math.max(1, cooldownTicks);
+        }
+
+        private boolean canExecute(AttackContext context) {
+            return canExecute.test(context);
+        }
+
+        private void perform(AttackContext context) {
+            action.accept(context);
+        }
+
+        private int cooldownTicks() {
+            return cooldownTicks;
+        }
     }
 }

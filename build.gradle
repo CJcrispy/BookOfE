@@ -18,6 +18,10 @@ repositories {
 			includeGroup("software.bernie.geckolib")
 		}
 	}
+	maven {
+		// REI maven repository
+		url "https://maven.shedaniel.me"
+	}
 }
 
 fabricApi {
@@ -37,6 +41,10 @@ dependencies {
 
 	// GeckoLib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
+	
+	// REI (Roughly Enough Items)
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
 	
 }
 

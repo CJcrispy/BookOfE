@@ -7,9 +7,9 @@
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",
   "start_height": {
-    "absolute": 0
+    "type": "minecraft:world_surface",
+    "offset": 0
   },
-  "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "use_expansion_hack": false,
   "liquid_settings": "apply_waterlogging",
   "spawn_overrides": {
@@ -24,6 +24,5 @@
         }
       ]
     }
-  },
-  "pool_aliases": []
+  }
 }

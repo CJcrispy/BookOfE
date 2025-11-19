@@ -3,7 +3,9 @@
 	"package": "net.cjcrispy.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"ItemRendererMixin",
+		"LivingEntityDamageMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -1,0 +1,44 @@
+{
+  "parent": "bookofe:discover_shrine",
+  "display": {
+    "icon": {
+      "id": "bookofe:worm_hammer"
+    },
+    "title": {
+      "translate": "advancement.bookofe.kill_joe_rebel.title"
+    },
+    "description": {
+      "translate": "advancement.bookofe.kill_joe_rebel.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "killed_joe_rebel": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "bookofe:joe_rebel"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "killed_joe_rebel"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}
+

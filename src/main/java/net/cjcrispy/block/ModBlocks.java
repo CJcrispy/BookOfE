@@ -6,6 +6,7 @@ import net.cjcrispy.block.custom.CultAltarBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.item.BlockItem;
@@ -21,7 +22,12 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     public static final Block CULT_ALTAR = registerBlock("cult_altar",
-            new CultAltarBlock(AbstractBlock.Settings.create().nonOpaque()));
+            new CultAltarBlock(AbstractBlock.Settings.copy(Blocks.DEEPSLATE_TILES)
+                .requiresTool()
+                .hardness(5.0f)
+                .resistance(10.0f)
+                .sounds(BlockSoundGroup.DEEPSLATE_TILES)
+                .nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "bookofe:cult_altar"
+    },
+    "title": {
+      "translate": "advancement.bookofe.root.title"
+    },
+    "description": {
+      "translate": "advancement.bookofe.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
