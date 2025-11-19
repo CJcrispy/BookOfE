@@ -1,13 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "PPP",
-    "PEP",
-    "OOO"
-  ],
   "key": {
     "P": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:planks"
     },
     "E": {
       "item": "minecraft:emerald"
@@ -16,15 +11,14 @@
       "item": "minecraft:obsidian"
     }
   },
+  "pattern": [
+    "PPP",
+    "PEP",
+    "OOO"
+  ],
   "result": {
     "item": "bookofe:cult_altar",
     "count": 1
-  },
-  "fabric:conditions": [
-    {
-      "type": "fabric:advancement",
-      "advancement": "bookofe:root"
-    }
-  ]
+  }
 }
 

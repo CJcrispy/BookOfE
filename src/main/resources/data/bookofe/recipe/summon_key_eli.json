@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "pattern": [
     " D ",
     "DED",
@@ -19,12 +20,6 @@
   "result": {
     "item": "bookofe:summon_key_eli",
     "count": 1
-  },
-  "fabric:conditions": [
-    {
-      "type": "fabric:advancement",
-      "advancement": "bookofe:discover_shrine"
-    }
-  ]
+  }
 }
 

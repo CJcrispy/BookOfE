@@ -122,9 +122,9 @@ public class CultAltarBlock extends HorizontalFacingBlock {
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.isOf(newState.getBlock())) {
-            // Block is being removed/broken
-            // The mixin will suppress default break particles, and we spawn enchanting particles
+        // Check if block is being broken (not just moved)
+        if (!state.isOf(newState.getBlock()) && !moved) {
+            // Block is being broken
             if (!world.isClient() && world instanceof ServerWorld serverWorld) {
                 double centerX = pos.getX() + 0.5D;
                 double centerY = pos.getY() + 0.5D;
@@ -145,6 +145,12 @@ public class CultAltarBlock extends HorizontalFacingBlock {
             }
         }
         super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    @Override
+    public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
+        // Call parent first - this should handle loot table drops
+        super.onStacksDropped(state, world, pos, tool, dropExperience);
     }
 
     @Override

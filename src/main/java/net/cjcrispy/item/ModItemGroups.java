@@ -22,7 +22,7 @@ public class ModItemGroups {
         // Register item group after items and blocks are loaded
         BOOK_OF_E_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
                 Identifier.of(BookOfE.MOD_ID, "book_of_e_items"),
-                FabricItemGroup.builder().icon(() -> new ItemStack(Items.GOLDEN_APPLE))
+                FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.CULT_ALTAR))
                         .displayName(Text.translatable("itemgroup.bookofe.book_of_e_items"))
                         .entries((displayContext, entries) -> {
                             entries.add(ModItems.NICKY_SUMMONING_KEY);

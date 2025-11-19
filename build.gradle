@@ -22,6 +22,10 @@ repositories {
 		// REI maven repository
 		url "https://maven.shedaniel.me"
 	}
+	maven {
+		// Architectury API
+		url "https://maven.architectury.dev/"
+	}
 }
 
 fabricApi {
@@ -41,6 +45,9 @@ dependencies {
 
 	// GeckoLib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
+	
+	// Architectury API (required by REI)
+	modImplementation "dev.architectury:architectury-fabric:${architectury_version}"
 	
 	// REI (Roughly Enough Items)
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}"

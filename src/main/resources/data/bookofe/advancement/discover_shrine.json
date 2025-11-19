@@ -20,14 +20,14 @@
       "trigger": "minecraft:location",
       "conditions": {
         "location": {
-          "feature": "bookofe:shrine"
+          "structure": "bookofe:shrine"
         }
       }
     }
   },
   "requirements": [
     [
-      "root"
+      "discover_shrine"
     ]
   ],
   "rewards": {
