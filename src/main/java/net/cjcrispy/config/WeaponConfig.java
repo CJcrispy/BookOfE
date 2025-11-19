@@ -65,8 +65,8 @@ public final class WeaponConfig {
 		// Moonfall ability
 		public static final int MOONFALL_COOLDOWN_TICKS = 240; // 12 seconds
 		public static final double MOONFALL_RANGE = 20.0; // blocks
-		public static final float MOONFALL_DAMAGE = 6.0f; // base damage
-		public static final float MOONFALL_UNDEAD_DAMAGE = 12.0f; // damage to undead
+		public static final float MOONFALL_DAMAGE = 10.0f; // base damage
+		public static final float MOONFALL_UNDEAD_DAMAGE = 16.0f; // damage to undead
 		public static final int MOONFALL_BLINDNESS_DURATION_TICKS = 60; // 3 seconds
 		public static final int MOONFALL_GLOW_DURATION_TICKS = 40; // 2 seconds
 	}
@@ -77,20 +77,15 @@ public final class WeaponConfig {
 		public static final int ADDITIONAL_DAMAGE = randomizeIntStat(SEED, 1, 5);
 		public static final float ATTACK_SPEED = randomizeFloatStat(SEED + 1, -2.8f, -1.0f);
 
-		// Tidal Flow passive (momentum-based)
-		public static final int TIDAL_FLOW_TRACKING_WINDOW_TICKS = 40; // 2 seconds
-		public static final double TIDAL_FLOW_MIN_DISTANCE = 5.0; // blocks to move in 2s
-		public static final float TIDAL_FLOW_DAMAGE_MULTIPLIER = 1.2f; // +20% damage
-
-		// Surf ability
-		public static final int SURF_COOLDOWN_TICKS = 120; // 6s
-		public static final double SURF_DISTANCE_BLOCKS = 12.0; // wave travels 12 blocks
-		public static final double SURF_SPEED = 0.8; // blocks per tick
-		public static final float SURF_DAMAGE = 6.0f; // damage to enemies hit by wave
-		public static final double SURF_WIDTH = 2.5; // wave width
-		public static final int SURF_DURATION_TICKS = 30; // wave persists for 1.5s
-		public static final double SURF_VELOCITY_STRENGTH = 0.8; // strong forward push (surfing on land)
-		public static final int SURF_MOMENTUM_PERSISTENCE_TICKS = 20; // velocity continues for 1s after wave
+		// Riptide Crash ability
+		public static final int RIPTIDE_CRASH_COOLDOWN_TICKS = 200; // 10 seconds
+		public static final double RIPTIDE_CRASH_DISTANCE = 7.0; // average 7 blocks (6-8 range)
+		public static final double RIPTIDE_CRASH_SPEED = 1.8; // dash speed
+		public static final float RIPTIDE_CRASH_DAMAGE = 8.0f; // bonus damage to first hit
+		public static final int RIPTIDE_CRASH_DOLPHIN_GRACE_TICKS = 20; // 1 second
+		public static final int RIPTIDE_CRASH_SOAKED_DURATION_TICKS = 100; // 5 seconds
+		public static final double RIPTIDE_CRASH_HIT_RANGE = 1.5; // hit detection range
+		public static final double RIPTIDE_CRASH_FIRE_EXTINGUISH_RANGE = 1.0; // range to extinguish fire/lava
 	}
 
 	public static final class Blackborn {
@@ -102,6 +97,13 @@ public final class WeaponConfig {
 		public static final double TRUE_DAMAGE_CHANCE = 0.60; // 60%
 		public static final float TRUE_DAMAGE_AMOUNT = 3.0f;
 		public static final int WITHER_TICKS = 60; // 3 seconds
+
+		// Void Slash ability
+		public static final int VOID_SLASH_COOLDOWN_TICKS = 200; // 10 seconds
+		public static final double VOID_SLASH_RANGE = 12.0; // blocks
+		public static final double VOID_SLASH_WIDTH = 5.0; // width of the slash
+		public static final float VOID_SLASH_DAMAGE = 10.0f; // base damage
+		public static final int VOID_SLASH_WITHER_TICKS = 100; // 5 seconds of wither
 	}
 
 	public static final class Calamity {

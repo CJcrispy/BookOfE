@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    " D ",
-    "DED",
+    " N ",
+    "NEN",
     " I "
   ],
   "key": {
-    "D": {
-      "item": "minecraft:diamond"
+    "N": {
+      "item": "minecraft:netherite_ingot"
     },
     "E": {
       "item": "minecraft:emerald"
@@ -18,7 +18,7 @@
     }
   },
   "result": {
-    "item": "bookofe:summon_key_eli",
+    "id": "bookofe:summon_key_eli",
     "count": 1
   }
 }

@@ -2,8 +2,10 @@ package net.cjcrispy.mixin;
 
 import net.cjcrispy.config.WeaponConfig;
 import net.cjcrispy.item.ModItems;
+import net.cjcrispy.item.custom.BeachBladeItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -19,10 +21,16 @@ import net.minecraft.util.math.random.Random;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityDamageMixin {
+
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private float modifyDamage(float amount, DamageSource source) {
 		LivingEntity entity = (LivingEntity) (Object) this;
 		
+		// Beach Blade: Reduce fire damage for soaked entities
+		if (BeachBladeItem.isSoaked(entity.getId()) && source.isOf(DamageTypes.ON_FIRE)) {
+			amount *= 0.5f; // 50% fire damage reduction
+		}
+
 		// Only apply to players
 		if (!(entity instanceof PlayerEntity player)) {
 			return amount;

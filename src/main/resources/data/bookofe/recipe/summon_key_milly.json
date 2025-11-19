@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    " N ",
-    "NEN",
+    " R ",
+    "RER",
     " I "
   ],
   "key": {
-    "N": {
-      "item": "minecraft:netherite_ingot"
+    "R": {
+      "item": "minecraft:redstone"
     },
     "E": {
       "item": "minecraft:emerald"
@@ -18,7 +18,7 @@
     }
   },
   "result": {
-    "item": "bookofe:summon_key_milly",
+    "id": "bookofe:summon_key_milly",
     "count": 1
   }
 }

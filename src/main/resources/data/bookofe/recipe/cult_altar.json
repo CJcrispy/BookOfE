@@ -1,23 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "P": {
-      "item": "minecraft:planks"
-    },
-    "E": {
-      "item": "minecraft:emerald"
-    },
-    "O": {
-      "item": "minecraft:obsidian"
-    }
+    "W": [
+      {
+        "tag": "minecraft:planks"
+      }
+    ],
+    "E": [
+      {
+        "item": "minecraft:emerald"
+      }
+    ],
+    "O": [
+      {
+        "item": "minecraft:obsidian"
+      }
+    ]
   },
   "pattern": [
-    "PPP",
-    "PEP",
+    "WWW",
+    "WEW",
     "OOO"
   ],
   "result": {
-    "item": "bookofe:cult_altar",
+    "id": "bookofe:cult_altar",
     "count": 1
   }
 }

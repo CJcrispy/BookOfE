@@ -1,22 +1,16 @@
 package net.cjcrispy.block;
 
-import com.mojang.serialization.MapCodec;
 import net.cjcrispy.BookOfE;
 import net.cjcrispy.block.custom.CultAltarBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 
 public class ModBlocks {

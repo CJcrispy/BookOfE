@@ -13,16 +13,20 @@
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": true
+    "hidden": false
   },
   "criteria": {
     "discover_shrine": {
-      "trigger": "minecraft:location",
       "conditions": {
-        "location": {
-          "structure": "bookofe:shrine"
+        "player": {
+          "location": {
+            "structures": "bookofe:shrine",
+            "dimension": "minecraft:overworld"
+          },
+          "distance": {}
         }
-      }
+      },
+      "trigger": "minecraft:location"
     }
   },
   "requirements": [
@@ -31,8 +35,15 @@
     ]
   ],
   "rewards": {
-    "experience": 100
+    "experience": 100,
+    "recipes": [
+      "bookofe:cult_altar",
+      "bookofe:summon_key_eli",
+      "bookofe:summon_key_joe",
+      "bookofe:summon_key_milly",
+      "bookofe:summon_key_nicky"
+    ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }
 
